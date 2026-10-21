@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bank Queue App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      text-align: center;
+    }
+    #queueDisplay {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: darkblue;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bank Queue Simulation</h1>
+
+  <button onclick="addCustomer()">Add Customer</button>
+  <button onclick="serveCustomer()">Serve Customer</button>
+
+  <div id="queueDisplay">Queue is empty</div>
+
+  <script>
+    class Queue {
+      constructor() {
+        this.items = [];
+        this.counter = 1; // auto-number customers
+      }
+
+      enqueue() {
+        let customer = "Customer " + this.counter++;
+        this.items.push(customer);
+        return customer + " joined the line.";
+      }
+
+      dequeue() {
+        if (this.items.length === 0) {
+          return "No customers waiting.";
+        }
+        let served = this.items.shift();
+        return served + " is being served.";
+      }
+
+      display() {
+        return this.items.length > 0 ? "Current queue: " + this.items.join(", ") : "Queue is empty";
+      }
+    }
+
+    let bankQueue = new Queue();
+
+    function addCustomer() {
+      let msg = bankQueue.enqueue();
+      document.getElementById("queueDisplay").innerText = msg + "\n" + bankQueue.display();
+    }
+
+    function serveCustomer() {
+      let msg = bankQueue.dequeue();
+      document.getElementById("queueDisplay").innerText = msg + "\n" + bankQueue.display();
+    }
+  </script>
+</body>
+</html>
